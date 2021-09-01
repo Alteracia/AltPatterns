@@ -1,7 +1,7 @@
 {
-  "name": "com.alteracia.patterns",
+  "name": "com.alteracia.altpatterns",
   "version": "0.0.0",
-  "displayName": "patterns",
+  "displayName": "altPatterns",
   "description": "Some Patterns for Unity",
   "unity": "2019.4",
   "keywords": [

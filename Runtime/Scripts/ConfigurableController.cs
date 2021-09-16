@@ -42,9 +42,15 @@ namespace Alteracia.Patterns
          this.configuration = config;
          if (read) ReadConfiguration();
       }
-
-      public async void SetConfiguration(string json, bool read = true)
+      
+      public void RewriteConfiguration(string json)
       {
+         SetConfiguration(json, true);
+      }
+
+      public void SetConfiguration(string json, bool rewrite = false, bool read = true)
+      {
+         if (!rewrite) this.configuration = ScriptableObject.Instantiate(this.configuration);
          JsonUtility.FromJsonOverwrite(json, configuration);
          if (read) ReadConfiguration();
       }

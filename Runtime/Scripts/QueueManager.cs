@@ -7,13 +7,13 @@ using UnityEngine;
 
 namespace Alteracia.Patterns
 {
-    public class QueueManager<T, T0> : Manager<T> where T : Manager<T>
+    public abstract class QueueManager<T, T0> : Manager<T> where T : Manager<T>
     {
         [SerializeField] 
         protected int maxTry = 0;
         
         [SerializeField]
-        protected List<T0> queue = new List<T0>();
+        protected List<T0> queue = new List<T0>(); // TODO use Queue net
         private CancellationTokenSource _cancelTokenSource = new CancellationTokenSource();
         
         public void AddToQueue(T0 item, int position)
@@ -71,9 +71,9 @@ namespace Alteracia.Patterns
             }
         }
 
-        protected virtual async Task<bool> Execution(T0 current) { await Task.Yield(); return true; }
+        protected abstract Task<bool> Execution(T0 current);
 
-        protected virtual async void AfterExecution(T0 current) { await Task.Yield(); }
+        protected abstract void AfterExecution(T0 current);
 
         private void OnDestroy()
         {

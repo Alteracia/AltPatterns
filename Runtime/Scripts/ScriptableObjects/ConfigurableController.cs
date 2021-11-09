@@ -2,17 +2,17 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Alteracia.Patterns
+namespace Alteracia.Patterns.ScriptableObjects
 {
    [Serializable]
    public abstract class ConfigurationReader : ScriptableObject
    {
-      public abstract string GetRelativeUrlToFile(string absolutUrl);
-
-      public abstract Task ReadConfigFile(string relativeUrl, ScriptableObject configurable);
+      public abstract Task ReadConfigFile(ScriptableObject configurable);
    }
 
    [Serializable]
@@ -25,10 +25,9 @@ namespace Alteracia.Patterns
       [SerializeField]
       protected ConfigurationReader reader;
       [SerializeField]
-      protected string configRelativeUrl;
-      [SerializeField]
       protected T1 configuration;
-      
+      public T1 Configuration => configuration;
+      [Space]
       [SerializeField]
       public ConfigEvent configurationReady = new ConfigEvent();
 
@@ -50,7 +49,7 @@ namespace Alteracia.Patterns
 
       public void SetConfiguration(string json, bool rewrite = false, bool read = true)
       {
-         if (!rewrite) this.configuration = ScriptableObject.Instantiate(this.configuration);
+         if (!rewrite) this.configuration = Instantiate(this.configuration);
          JsonUtility.FromJsonOverwrite(json, configuration);
          if (read) ReadConfiguration();
       }
@@ -60,7 +59,7 @@ namespace Alteracia.Patterns
          if (reader)
          {
             // Try load config
-            await reader.ReadConfigFile(configRelativeUrl, configuration);
+            await reader.ReadConfigFile(configuration);
          }
          
          if (!configuration) return;
@@ -72,90 +71,73 @@ namespace Alteracia.Patterns
 
       protected abstract void OnConfigurationRead();
 
-      public async System.Threading.Tasks.Task ReadConfigurationFromFile()
+#if UNITY_EDITOR
+      public void CreateConfiguration()
       {
-         if (reader == null)
+         var path = UnityEditor.EditorUtility.SaveFilePanel(
+            "Create configuration",
+            "",
+            typeof(T1) + ".asset",
+            "asset");
+
+         if (string.IsNullOrEmpty(path)) return;
+         if (!path.StartsWith(Application.dataPath))
          {
-            Debug.LogWarning($"No ConfigurationReader for {typeof(T0)} Component of {this.gameObject.name}. Configuration {typeof(T1)} will not be overwritten");
+            Debug.LogError("Can't save configuration outside project assets folder");
             return;
          }
-         await reader.ReadConfigFile(configRelativeUrl, configuration);
-      }
-
-      public string ReadConfigurationFromJson()
-      {
-#if UNITY_EDITOR
          
+         var so = ScriptableObject.CreateInstance<T1>();
+         
+         Undo.RecordObject(so, $"Create configuration {typeof(T1)}");
+         AssetDatabase.CreateAsset(so, path.Substring(Application.dataPath.Length - 6));
+
+         this.configuration = so;
+         
+         EditorUtility.SetDirty(so);
+      }
+      
+      public void ReadConfigurationFromJson()
+      {
          var path = UnityEditor.EditorUtility.OpenFilePanel(
             "Open configuration",
             "",
             "json");
          
-         if (string.IsNullOrEmpty(path)) return null;
+         if (string.IsNullOrEmpty(path)) return;
 
          StreamReader freader = new StreamReader(path);
          string json = freader.ReadToEnd();
          
          JsonUtility.FromJsonOverwrite(json, configuration);
-         
-         if (reader != null)
-            configRelativeUrl = reader.GetRelativeUrlToFile(path);
-         else
-         {
-            Debug.LogWarning($"No ConfigurationReader for {typeof(T0)} Component of {this.gameObject.name}. Path to configuration file will not be provided");
-            return null;
-         }
-         return configRelativeUrl;
-            
-#else
-         return null;
-#endif
       }
 
-      public string SaveConfigurationToJson()
+      public void SaveConfigurationToJson()
       {
-         
-#if UNITY_EDITOR
-
          var path = UnityEditor.EditorUtility.SaveFilePanel(
             "Save configuration as json",
             "",
             typeof(T1) + ".json",
             "json");
 
-         if (string.IsNullOrEmpty(path)) return null;
+         if (string.IsNullOrEmpty(path)) return;
          
          var json = JsonUtility.ToJson(configuration);
          
          // Get only parameters, no reference to object
          Regex regex = new Regex(@"\s*""([^""]*?)""\s*:\s*\{([^\{\}]*?)\}(,|\s|)");
          json = regex.Replace(json, "");
-         // Do not save path
-         regex = new Regex(@"\s*""(configRelativeUrl)"" *: *(""(.*?)""(,|\s|)|\s*\{(.*?)\}(,|\s|))");
-         json = regex.Replace(json, "");
          // Clear "," in the end
          regex = new Regex(@",\s*\}");
          json = regex.Replace(json, "}");
-   
-         if (string.IsNullOrEmpty(json)) return null;
+
+         if (string.IsNullOrEmpty(json)) return;
 
          StreamWriter writer = new StreamWriter(path, false);
          writer.WriteLine(json);
          writer.Close();
-         
-         if (reader != null)
-            configRelativeUrl = reader.GetRelativeUrlToFile(path);
-         else
-         {
-            Debug.LogWarning($"No ConfigurationReader for {typeof(T0)} Component of {this.gameObject.name}. Path to configuration file will not be provided");
-            return null;
-         }
-
-         return configRelativeUrl;
-         
-#else
-         return null;
-#endif
       }
+      
+#endif
    }
 }

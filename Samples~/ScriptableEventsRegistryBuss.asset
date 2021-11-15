@@ -9,6 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7d8155a272d5654aa00731f8a4f53b0, type: 3}
-  m_Name: AddressablesConfigurationReader
+  m_Script: {fileID: 11500000, guid: c208f6951f456428298311c7366f5d0b, type: 3}
+  m_Name: ScriptableEventsRegistryBuss
   m_EditorClassIdentifier: 
+  nested: []
+  registries:
+  - {fileID: 11400000, guid: 34bf2b36469be40368bd316eb7a28706, type: 2}
+  - {fileID: 11400000, guid: e11552cb6be75499b95eb7f41631e1d8, type: 2}

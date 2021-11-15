@@ -65,10 +65,10 @@ namespace Alteracia.Patterns.ScriptableObjects
             EditorUtility.SetDirty(this);
             EditorUtility.SetDirty(newNested);
             
-            OnAdded();
+            OnUpdateNestedList();
         }
 
-        protected virtual void OnAdded() { }
+        public virtual void OnUpdateNestedList() { }
 
         [ContextMenu("Delete all")]
         protected void DeleteAll()

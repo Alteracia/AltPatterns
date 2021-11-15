@@ -30,6 +30,7 @@ namespace Alteracia.Patterns.ScriptableObjects
 
             EditorUtility.SetDirty(root);
             EditorUtility.SetDirty(this);
+            root.OnUpdateNestedList();
         }
 
         [ContextMenu("Delete")]
@@ -40,6 +41,8 @@ namespace Alteracia.Patterns.ScriptableObjects
             AssetDatabase.SaveAssets();
             
             EditorUtility.SetDirty(root);
+            root.OnUpdateNestedList();
+            
 //            EditorUtility.SetDirty(this);
         }
 #endif

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Alteracia.Patterns.ScriptableObjects
 {
@@ -8,21 +7,41 @@ namespace Alteracia.Patterns.ScriptableObjects
     {
        
 #if UNITY_EDITOR
-        
+
         void Awake()
         {
-            ScriptableEventsRegistryBuss.Instance?.AddRegistry(this);
+            Debug.Log("Awake " + this.name);
+            OnUpdateNestedList();
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("Awake " + this.name);
         }
 
         private void OnValidate()
         {
-           // Debug.Log("On Validation");
+            Debug.Log("On Validation " + this.name);
+        }
+        
+        // Called after play pressed in editor
+        public void OnDisable()
+        {
+            Debug.Log("OnDisable " + this.name);
         }
 
-        protected override void OnAdded()
+        public override void OnUpdateNestedList()
         {
-            ScriptableEventsRegistryBuss.Instance?.AddRegistry(this);
+            if (!ScriptableEventsRegistryBuss.Registries.Contains(this))
+                ScriptableEventsRegistryBuss.Registries.Add(this);
+            if (ScriptableEventsRegistryBuss.Instance) 
+                ScriptableEventsRegistryBuss.Instance.AddRegistry(this);
         }
+        
+        [ContextMenu("Add String Object Event")]
+        private void AddStringObjectEvent() => AddNested<Events.StringObjectEvent>();
+        [ContextMenu("Add String Two State Event")]
+        private void AddStringTwoStateEvent() => AddNested<Events.StringTwoStateEvent>();
 
         [ContextMenu("Add Vector3 Object Event")]
         private void AddVector3ObjectEvent() => AddNested<Events.Vector3ObjectEvent>();

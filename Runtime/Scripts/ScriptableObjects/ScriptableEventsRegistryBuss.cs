@@ -9,45 +9,19 @@ using UnityEditor;
 namespace Alteracia.Patterns.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "ScriptableEventsRegistryBuss", menuName = "AltEvents/ScriptableEventsRegistryBuss", order = 0)]
-    public class ScriptableEventsRegistryBuss : ScriptableEventsRegistry
+    public class ScriptableEventsRegistryBuss : RootScriptableObject
     {
+        public static List<ScriptableEventsRegistry> Registries = new List<ScriptableEventsRegistry>();
         [SerializeField] private List<ScriptableEventsRegistry> registries = new List<ScriptableEventsRegistry>();
         private static ScriptableEventsRegistryBuss _instance;
-
-        public static ScriptableEventsRegistryBuss Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    Debug.LogWarning("There is no Scriptable Events Registry Buss asset in project");
-                }
-
-                return _instance;
-            }
-        }
-        
-        // Awake called after application starts - for editor start editor!
-        private void Awake()
-        {
-            Debug.Log("Awake");
-        }
         
         // Called after runtime starts
         public void OnEnable()
         {
-            Debug.Log("OnEnable");
+            Debug.Log("OnEnable " + this.name);
             BindEventsRegistryAndBuss();
         }
         
-        // Called after play pressed in editor
-        public void OnDisable()
-        {
-            Debug.Log("OnDisable");
-            AssetDatabase.SaveAssets();
-            EditorUtility.SetDirty(this);
-        }
-
         // Subscribe all on Start
         private void BindEventsRegistryAndBuss()
         {
@@ -63,13 +37,38 @@ namespace Alteracia.Patterns.ScriptableObjects
                 }
             }
         }
-
         
 #if UNITY_EDITOR
-        
-        private ScriptableEventsRegistryBuss()
+
+        public static ScriptableEventsRegistryBuss Instance
         {
+            get
+            {
+                if (_instance == null)
+                {
+                    Debug.LogWarning("There is no Scriptable Events Registry Buss asset in project");
+                }
+
+                return _instance;
+            }
+        }
+        
+        // Called after play pressed in editor
+        public void OnDisable()
+        {
+            Debug.Log("OnDisable " + this.name);
+            SaveThis();
+        }
+
+        // Awake called after application starts - for editor start editor!
+        void Awake()
+        {
+            Debug.Log("Awake " + this.name);
             if (_instance == null) _instance = this;
+            foreach (var registry in Registries.Where(registry => registry))
+            {
+                this.AddRegistry(registry);
+            }
         }
         
         public void AddRegistry(ScriptableEventsRegistry registry)
@@ -93,15 +92,37 @@ namespace Alteracia.Patterns.ScriptableObjects
                 if (equal) continue;
                 AddNested((NestedScriptableObject)soEvent);
                 //Debug.Log("Added");
-
             }
         }
         
         [ContextMenu("Save")]
         private void SaveThis()
         {
+            if (registries != null) registries.RemoveAll(r => r == null);
+            
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(this);
+        }
+
+        [ContextMenu("Clear Events")]
+        private void ClearEvents()
+        {
+            // TODO Check for duplications
+            
+            if (registries != null) registries.RemoveAll(r => r == null);
+
+            var list = this.Nested.OfType<ISubscribableEvent>().ToList();
+            for (int i = list.Count; i-- > 0;)
+            {
+                var tmp = list[i];
+                bool found = registries.SelectMany(registry => 
+                    registry.Nested.OfType<ISubscribableEvent>()).Any(soEvent => tmp.Equals(soEvent));
+
+                if (found) continue;
+                this.Nested.Remove((NestedScriptableObject) tmp);
+                Undo.DestroyObjectImmediate((NestedScriptableObject) tmp);
+            }
+            AssetDatabase.SaveAssets();
         }
         
 #endif

@@ -2,7 +2,7 @@
 
 namespace Alteracia.Patterns.ScriptableObjects.Events
 {
-    public class Vector3TwoStateSubscribableEvent : TwoStateSubscribableEvents<Vector3>
+    public class Vector3TwoStateEvent : TwoStateEvents<Vector3>
     {
     }
 }

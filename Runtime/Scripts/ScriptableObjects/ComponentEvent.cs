@@ -11,7 +11,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         void AddComponent(GameObject go);
     }
 
-    public abstract class ComponentSubscribableEvents<T> : NestedScriptableObject, ISubscribableEvent, IComponentEvents<T> where T : Component
+    public abstract class ComponentEvent<T> : NestedScriptableObject, ISubscribableEvent, IComponentEvents<T> where T : Component
     {
         [NonSerialized] private Action<T> _onEvent;
 
@@ -31,7 +31,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             set => _onEvent = value;
         }
 
-        protected ComponentSubscribableEvents()
+        protected ComponentEvent()
         {
             _onEvent += component => _last = component;
         }
@@ -52,8 +52,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            ComponentSubscribableEvents<T> otherSubscribableEvent = other as ComponentSubscribableEvents<T>;
-            return otherSubscribableEvent && String.Equals(this.name, otherSubscribableEvent.name, StringComparison.CurrentCultureIgnoreCase);
+            ComponentEvent<T> otherEvent = other as ComponentEvent<T>;
+            return otherEvent && String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void SubscribeTo(ISubscribableEvent other)
@@ -68,8 +68,8 @@ namespace Alteracia.Patterns.ScriptableObjects
                 }
 
                 _temporalLast = passed;
-                ComponentSubscribableEvents<T> otherObjectSubscribableEvent = (ComponentSubscribableEvents<T>)other;
-                otherObjectSubscribableEvent.OnEvent?.Invoke(passed);
+                ComponentEvent<T> otherObjectEvent = (ComponentEvent<T>)other;
+                otherObjectEvent.OnEvent?.Invoke(passed);
             };
         }
     }

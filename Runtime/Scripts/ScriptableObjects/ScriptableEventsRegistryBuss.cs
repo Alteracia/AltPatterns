@@ -56,7 +56,7 @@ namespace Alteracia.Patterns.ScriptableObjects
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
                     if (!cur.Equals(soEvent)) continue;
-                    Debug.Log("Subscribe");
+                    //Debug.Log("Subscribe");
                     cur.SubscribeTo(soEvent);
                     soEvent.SubscribeTo(cur);
                     break;
@@ -74,19 +74,26 @@ namespace Alteracia.Patterns.ScriptableObjects
         
         public void AddRegistry(ScriptableEventsRegistry registry)
         {
-            if (registries.Contains(registry)) return;
-            
-            registries.Add(registry);
+            if (!registries.Contains(registry))
+                registries.Add(registry);
 
             foreach (var soEvent in registry.Nested.OfType<ISubscribableEvent>())
             {
+                bool equal = false;
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
-                    if (cur.Equals(soEvent)) continue;
-                    AddNested((NestedScriptableObject)soEvent);
-                    Debug.Log("Added");
-                    break;
+                    if (cur.Equals(soEvent))
+                    {
+                        equal = true;
+                        break;
+                    }
+                    
                 }
+
+                if (equal) continue;
+                AddNested((NestedScriptableObject)soEvent);
+                //Debug.Log("Added");
+
             }
         }
         

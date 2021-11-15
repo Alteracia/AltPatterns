@@ -15,7 +15,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         Action<T> OnEvent { get; set; }
     }
 
-    public abstract class ObjectSubscribableEvent<T> : NestedScriptableObject, IObjectEvent<T>, ISubscribableEvent
+    public abstract class ObjectEvent<T> : NestedScriptableObject, IObjectEvent<T>, ISubscribableEvent
     {
         [NonSerialized] private Action<T> _onEvent;
 
@@ -41,8 +41,8 @@ namespace Alteracia.Patterns.ScriptableObjects
                 }
 
                 _temporalLast = passed;
-                ObjectSubscribableEvent<T> otherObjectSubscribableEvent = (ObjectSubscribableEvent<T>)other;
-                otherObjectSubscribableEvent.OnEvent?.Invoke(passed);
+                ObjectEvent<T> otherObjectEvent = (ObjectEvent<T>)other;
+                otherObjectEvent.OnEvent?.Invoke(passed);
             };
         }
 
@@ -52,7 +52,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             set => _onEvent = value;
         }
 
-        protected ObjectSubscribableEvent()
+        protected ObjectEvent()
         {
             _onEvent += obj => _last = obj;
         }
@@ -61,8 +61,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            ObjectSubscribableEvent<T> otherSubscribableEvent = other as ObjectSubscribableEvent<T>;
-            return otherSubscribableEvent && String.Equals(this.name, otherSubscribableEvent.name, StringComparison.CurrentCultureIgnoreCase);
+            ObjectEvent<T> otherEvent = other as ObjectEvent<T>;
+            return otherEvent && String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

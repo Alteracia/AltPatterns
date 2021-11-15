@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tests
 {
-    public class TwoStateSubscribableEventsClass : TwoStateSubscribableEvents<Vector3>
+    public class TwoStateEventsClass : TwoStateEvents<Vector3>
     {
     }
 }

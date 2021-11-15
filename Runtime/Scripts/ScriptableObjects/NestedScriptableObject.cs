@@ -20,6 +20,10 @@ namespace Alteracia.Patterns.ScriptableObjects
         [ContextMenu("Rename")]
         private void SaveThis()
         {
+            if (!root)
+            {
+                Debug.LogWarning("Can't rename not nested asset");
+            }
             Undo.RecordObject(this, $"Rename {this.rename}");
             this.name = rename;
             AssetDatabase.SaveAssets();

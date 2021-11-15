@@ -2,7 +2,7 @@
 
 namespace Alteracia.Patterns.ScriptableObjects.Events
 {
-    public class MeshRendererObjectSubscribableEvent : ObjectSubscribableEvent<MeshRenderer>
+    public class MeshRendererObjectEvent : ObjectEvent<MeshRenderer>
     {
     }
 }

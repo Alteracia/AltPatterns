@@ -28,6 +28,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rename: AvatarPosition2
   root: {fileID: 11400000}
+--- !u!114 &-2294632744705814038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023720b9b04ed264e96e5bbc45919cbb, type: 3}
+  m_Name: AltAnimatorTwoStateEvent
+  m_EditorClassIdentifier: 
+  rename: 
+  root: {fileID: 11400000}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +58,9 @@ MonoBehaviour:
   - {fileID: -7685090362323999275}
   - {fileID: -2919888655864386418}
   - {fileID: 4586194353607251133}
+  - {fileID: 0}
+  - {fileID: -2294632744705814038}
+  toAdd: {fileID: 0}
 --- !u!114 &4586194353607251133
 MonoBehaviour:
   m_ObjectHideFlags: 0

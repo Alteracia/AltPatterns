@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Alteracia.Patterns.ScriptableObjects.Events;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -13,7 +14,7 @@ namespace Tests
         [Test]
         public void CreateInstanceObjectEventsTest()
         {
-            var objEvent = ScriptableObject.CreateInstance<ObjectSubscribableEventsClass>();
+            var objEvent = ScriptableObject.CreateInstance<ObjectEventsClass>();
             Vector3 pass = Vector3.back;
             objEvent.OnEvent += vector3 =>
             {
@@ -26,7 +27,7 @@ namespace Tests
         [Test]
         public void CreateInstanceTwoStateEventsTest()
         {
-            var objEvent = ScriptableObject.CreateInstance<TwoStateSubscribableEventsClass>();
+            var objEvent = ScriptableObject.CreateInstance<TwoStateEventsClass>();
             Vector3 pass = Vector3.back;
             objEvent.OnPrimaryEvent += vector3 =>
             {
@@ -45,7 +46,7 @@ namespace Tests
         [Test]
         public void CreateInstanceComponentEventsTest()
         {
-            var compEvent = ScriptableObject.CreateInstance<ComponentSubscribableComponentSubscribableEventClass>();
+            var compEvent = ScriptableObject.CreateInstance<TransformComponentEvent>();
             GameObject gameObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
             compEvent.OnEvent += tr =>
             {

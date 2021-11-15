@@ -1,5 +1,103 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8945112579787498871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e8187af61ae42efac08d8787345bb3, type: 3}
+  m_Name: TransformTwoStateEvent
+  m_EditorClassIdentifier: 
+  rename: 
+  root: {fileID: 11400000}
+--- !u!114 &-7633562447037415935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22080c456f37b45dfba862b36118e305, type: 3}
+  m_Name: Vector3TwoStateEvent
+  m_EditorClassIdentifier: 
+  rename: 
+  root: {fileID: 11400000}
+--- !u!114 &-5880678973245975424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eafd3eff223884a328930e1d5e39d576, type: 3}
+  m_Name: Vector3ObjectEvent
+  m_EditorClassIdentifier: 
+  rename: AvatarPosition2
+  root: {fileID: 11400000}
+--- !u!114 &-3284397063094528121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d86fcbc975447d0b4c76a6c476c6ae, type: 3}
+  m_Name: RendererComponentEvent
+  m_EditorClassIdentifier: 
+  rename: 
+  root: {fileID: 11400000}
+--- !u!114 &-1889348497943122294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e7ddd06ec80c45d29029d862fa8e409, type: 3}
+  m_Name: TransformTwoStateEvent
+  m_EditorClassIdentifier: 
+  rename: TransformTwoStateEvent
+  root: {fileID: 11400000}
+--- !u!114 &-698302796622080235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676593cd44ca14ce49d657903b20b302, type: 3}
+  m_Name: transformevent
+  m_EditorClassIdentifier: 
+  rename: transformevent
+  root: {fileID: 11400000}
+--- !u!114 &-179954714781573610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023720b9b04ed264e96e5bbc45919cbb, type: 3}
+  m_Name: AltAnimatorTwoStateEvent
+  m_EditorClassIdentifier: 
+  rename: 
+  root: {fileID: 11400000}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +110,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c208f6951f456428298311c7366f5d0b, type: 3}
   m_Name: ScriptableEventsRegistryBuss
   m_EditorClassIdentifier: 
-  nested: []
+  nested:
+  - {fileID: -5880678973245975424}
+  - {fileID: 3519891964822816094}
+  - {fileID: -1889348497943122294}
+  - {fileID: 1505379230678151317}
+  - {fileID: -698302796622080235}
+  - {fileID: -8945112579787498871}
+  - {fileID: -7633562447037415935}
+  - {fileID: -3284397063094528121}
+  - {fileID: -179954714781573610}
+  toAdd: {fileID: 0}
   registries:
   - {fileID: 11400000, guid: 34bf2b36469be40368bd316eb7a28706, type: 2}
   - {fileID: 11400000, guid: e11552cb6be75499b95eb7f41631e1d8, type: 2}
+  - {fileID: 11400000}
+--- !u!114 &1505379230678151317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eafd3eff223884a328930e1d5e39d576, type: 3}
+  m_Name: AvatarPosition2
+  m_EditorClassIdentifier: 
+  rename: AvatarPosition2
+  root: {fileID: 11400000}
+--- !u!114 &3519891964822816094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18388970584a84723b0ebe7898fa7fd7, type: 3}
+  m_Name: AvatarPosition2
+  m_EditorClassIdentifier: 
+  rename: AvatarPosition2
+  root: {fileID: 11400000}

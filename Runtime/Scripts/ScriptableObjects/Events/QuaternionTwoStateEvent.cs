@@ -2,7 +2,7 @@
 
 namespace Alteracia.Patterns.ScriptableObjects.Events
 {
-    public class QuaternionTwoStateSubscribableEvent : TwoStateSubscribableEvents<Quaternion>
+    public class QuaternionTwoStateEvent : TwoStateEvents<Quaternion>
     {
     }
 }

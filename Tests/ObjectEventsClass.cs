@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Tests
 {
-    public class ObjectSubscribableEventsClass : ObjectSubscribableEvent<Vector3>
+    public class ObjectEventsClass : ObjectEvent<Vector3>
     {
     }
 }

@@ -14,7 +14,7 @@ namespace Alteracia.Patterns.ScriptableObjects
     /// <summary>
     /// Events of two state
     /// </summary>
-    public abstract class TwoStateSubscribableEvents<T> : NestedScriptableObject, ITwoStateEvent<T>, ISubscribableEvent
+    public abstract class TwoStateEvents<T> : NestedScriptableObject, ITwoStateEvent<T>, ISubscribableEvent
     {
         [NonSerialized] private bool? _state = null;
         public bool? IsSecondary => _state;
@@ -53,7 +53,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             set => _temporalSecondaryLast = value;
         }
         
-        protected TwoStateSubscribableEvents()
+        protected TwoStateEvents()
         {
             _onPrimaryEvent += obj =>
             {
@@ -71,14 +71,14 @@ namespace Alteracia.Patterns.ScriptableObjects
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            TwoStateSubscribableEvents<T> otherSubscribableEvent = other as TwoStateSubscribableEvents<T>;
-            return otherSubscribableEvent && 
-                   String.Equals(this.name, otherSubscribableEvent.name, StringComparison.CurrentCultureIgnoreCase);
+            TwoStateEvents<T> otherEvent = other as TwoStateEvents<T>;
+            return otherEvent && 
+                   String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);
         }
 
         public void SubscribeTo(ISubscribableEvent other)
         {
-            TwoStateSubscribableEvents<T> otherObjectSubscribableEvent = (TwoStateSubscribableEvents<T>)other;
+            TwoStateEvents<T> otherObjectEvent = (TwoStateEvents<T>)other;
             this.OnPrimaryEvent += passed =>
             {
                 if (passed == null || passed.Equals(other.TemporalLast))
@@ -89,19 +89,19 @@ namespace Alteracia.Patterns.ScriptableObjects
                 }
 
                 _temporalLast = passed;
-                otherObjectSubscribableEvent.OnPrimaryEvent?.Invoke(passed);
+                otherObjectEvent.OnPrimaryEvent?.Invoke(passed);
             };
             this.OnSecondaryEvent += passed =>
             {
-                if (passed == null || passed.Equals(otherObjectSubscribableEvent.TemporalSecondaryLast))
+                if (passed == null || passed.Equals(otherObjectEvent.TemporalSecondaryLast))
                 {
                     _temporalSecondaryLast = null;
-                    otherObjectSubscribableEvent.TemporalSecondaryLast = null;
+                    otherObjectEvent.TemporalSecondaryLast = null;
                     return;
                 }
 
                 _temporalSecondaryLast = passed;
-                otherObjectSubscribableEvent.OnSecondaryEvent?.Invoke(passed);
+                otherObjectEvent.OnSecondaryEvent?.Invoke(passed);
             };
         }
     }

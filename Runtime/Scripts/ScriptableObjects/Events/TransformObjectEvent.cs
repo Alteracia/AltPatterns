@@ -2,7 +2,7 @@
 
 namespace Alteracia.Patterns.ScriptableObjects.Events
 {
-    public class TransformObjectSubscribableEvent : ObjectSubscribableEvent<Transform>
+    public class TransformObjectEvent : ObjectEvent<Transform>
     {
     }
 }

@@ -14,6 +14,7 @@ namespace Alteracia.Patterns.ScriptableObjects
     public abstract class RootScriptableObject : ScriptableObject
     {
         [HideInInspector][SerializeField] private List<NestedScriptableObject> nested = new List<NestedScriptableObject>();
+        [SerializeField] private NestedScriptableObject toAdd;
 
         public List<NestedScriptableObject> Nested
         {
@@ -23,6 +24,22 @@ namespace Alteracia.Patterns.ScriptableObjects
 
 #if UNITY_EDITOR
 
+        [ContextMenu("Add new")]
+        private void AddNew()
+        {
+            if (!toAdd)
+            {
+                Debug.LogWarning("No object in \"To Add\" field");
+                return;
+            }
+            AddNested(toAdd);
+            
+            Debug.LogWarning($"Asset {toAdd.name} destroyed! Please restore references.");
+            AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(toAdd));
+           
+            toAdd = null;
+        }
+        
         protected void AddNested<T>() where T : NestedScriptableObject
         {
             var newNested = ScriptableObject.CreateInstance<T>();
@@ -47,7 +64,11 @@ namespace Alteracia.Patterns.ScriptableObjects
 
             EditorUtility.SetDirty(this);
             EditorUtility.SetDirty(newNested);
+            
+            OnAdded();
         }
+
+        protected virtual void OnAdded() { }
 
         [ContextMenu("Delete all")]
         protected void DeleteAll()

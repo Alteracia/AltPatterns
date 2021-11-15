@@ -3,10 +3,13 @@
 // 
 
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-namespace Alteracia.Patterns
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Alteracia.Patterns.ScriptableObjects
 {
     public abstract class RootScriptableObject : ScriptableObject
     {
@@ -24,6 +27,18 @@ namespace Alteracia.Patterns
         {
             var newNested = ScriptableObject.CreateInstance<T>();
             newNested.name = typeof(T).Name;
+            AddNewNested(newNested);
+        }
+        
+        public void AddNested<T>(T toCopy) where T : NestedScriptableObject
+        {
+            var newNested = ScriptableObject.Instantiate(toCopy);
+            newNested.name = toCopy.name;
+            AddNewNested(newNested);
+        }
+        
+        private void AddNewNested<T>(T newNested) where T : NestedScriptableObject
+        {
             newNested.Initialise(this);
             nested.Add(newNested);
 

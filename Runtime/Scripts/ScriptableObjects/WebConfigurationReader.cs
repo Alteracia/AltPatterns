@@ -14,10 +14,12 @@ namespace Alteracia.Patterns.ScriptableObjects
         
         public override async Task ReadConfigFile(ScriptableObject configurable)
         {
-            string url = System.IO.Path.Combine(local ? Application.absoluteURL : urlToHost, configurable.name);
-            using var req = await Requests.Get(url);
-            if (!req.Success()) return;
-            JsonUtility.FromJsonOverwrite(req.downloadHandler.text, configurable);
+            using (var req = await Requests.Get(
+                System.IO.Path.Combine(local ? Application.absoluteURL : urlToHost, configurable.name)))
+            {
+                if (!req.Success()) return;
+                JsonUtility.FromJsonOverwrite(req.downloadHandler.text, configurable);
+            }
         }
     }
 }

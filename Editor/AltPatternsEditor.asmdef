@@ -1,9 +1,7 @@
 {
     "name": "AltPatternsEditor",
-    "rootNamespace": "",
     "references": [
-        "AltPatterns",
-        "AlteraciaPatternsSample"
+        "AltPatterns"
     ],
     "includePlatforms": [
         "Editor"

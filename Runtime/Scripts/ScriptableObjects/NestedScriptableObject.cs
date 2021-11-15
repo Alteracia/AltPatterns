@@ -1,32 +1,33 @@
 ﻿// from KasperGameDev/Nested-Scriptable-Objects-Example 
 // https://github.com/KasperGameDev/Nested-Scriptable-Objects-Example/blob/main/Assets/Scripts/DamageType.cs
 
-using UnityEditor;
 using UnityEngine;
 
-namespace Alteracia.Patterns
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Alteracia.Patterns.ScriptableObjects
 {
     public abstract class NestedScriptableObject : ScriptableObject
     {
+        [SerializeField] private string rename;
         [HideInInspector][SerializeField] private RootScriptableObject root;
-
-        public RootScriptableObject Root => root;
 
 #if UNITY_EDITOR
         public void Initialise(RootScriptableObject newRoot) => root = newRoot;
         
-        /*
-        [ContextMenu("Save")]
+        [ContextMenu("Rename")]
         private void SaveThis()
         {
-            Undo.RecordObject(this, $"Save {this.name}");
+            Undo.RecordObject(this, $"Rename {this.rename}");
+            this.name = rename;
             AssetDatabase.SaveAssets();
 
             EditorUtility.SetDirty(root);
             EditorUtility.SetDirty(this);
         }
-        */
-        
+
         [ContextMenu("Delete")]
         private void DeleteThis()
         {
@@ -35,7 +36,7 @@ namespace Alteracia.Patterns
             AssetDatabase.SaveAssets();
             
             EditorUtility.SetDirty(root);
-            EditorUtility.SetDirty(this);
+//            EditorUtility.SetDirty(this);
         }
 #endif
     }

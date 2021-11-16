@@ -38,6 +38,16 @@ namespace Alteracia.Patterns.ScriptableObjects
                 ScriptableEventsRegistryBuss.Instance.AddRegistry(this);
         }
         
+        [ContextMenu("Add Int Object Event")]
+        private void AddIntObjectEvent() => AddNested<Events.IntObjectEvent>();
+        [ContextMenu("Add Int Two State Event")]
+        private void AddIntTwoStateEvent() => AddNested<Events.IntTwoStateEvent>();
+        
+        [ContextMenu("Add Float Object Event")]
+        private void AddFloatObjectEvent() => AddNested<Events.FloatObjectEvent>();
+        [ContextMenu("Add Float Two State Event")]
+        private void AddFloatTwoStateEvent() => AddNested<Events.FloatTwoStateEvent>();
+        
         [ContextMenu("Add String Object Event")]
         private void AddStringObjectEvent() => AddNested<Events.StringObjectEvent>();
         [ContextMenu("Add String Two State Event")]
@@ -48,12 +58,15 @@ namespace Alteracia.Patterns.ScriptableObjects
         [ContextMenu("Add Vector3 Two State Event")]
         private void AddVector3TwoStateEvent() => AddNested<Events.Vector3TwoStateEvent>();
         
-        
         [ContextMenu("Add Quaternion Object Event")]
         private void AddQuaternionObjectEvent() => AddNested<Events.QuaternionObjectEvent>();
         [ContextMenu("Add Quaternion Two State Event")]
         private void AddQuaternionTwoStateEvent() => AddNested<Events.QuaternionTwoStateEvent>();
         
+        [ContextMenu("Add ScriptableObject Object Event")]
+        private void AddScriptableObjectObjectEvent() => AddNested<Events.ScriptableObjectObjectEvent>();
+        [ContextMenu("Add ScriptableObject Two State Event")]
+        private void AddScriptableObjectTwoStateEvent() => AddNested<Events.ScriptableObjectTwoStateEvent>();
         
         [ContextMenu("Add Mesh Object Event")]
         private void AddMeshObjectEvent() => AddNested<Events.MeshObjectEvent>();
@@ -67,18 +80,18 @@ namespace Alteracia.Patterns.ScriptableObjects
         private void AddMaterialTwoStateEvent() => AddNested<Events.MaterialTwoStateEvent>();
         
         
-        [ContextMenu("Add Transform Object Event")]
+        [ContextMenu("Add Transform Object Event", true, 100)]
         private void AddTransformObjectEvent() => AddNested<Events.TransformObjectEvent>();
-        [ContextMenu("Add Transform Component Event")]
+        [ContextMenu("Add Transform Component Event", true, 100)]
         private void AddTransformComponentEvent() => AddNested<Events.TransformComponentEvent>();
-        [ContextMenu("Add Transform Two State Event")]
+        [ContextMenu("Add Transform Two State Event", true, 100)]
         private void AddTransformTwoStateEvent() => AddNested<Events.TransformTwoStateEvent>();
         
-        [ContextMenu("Add Renderer Object Event")]
+        [ContextMenu("Add Renderer Object Event", true, 100)]
         private void AddRendererObjectEvent() => AddNested<Events.MeshRendererObjectEvent>();
-        [ContextMenu("Add Renderer Component Event")]
+        [ContextMenu("Add Renderer Component Event", true, 100)]
         private void AddRendererComponentEvent() => AddNested<Events.MeshRendererComponentEvent>();
-        [ContextMenu("Add Renderer Two State Event")]
+        [ContextMenu("Add Renderer Two State Event", true, 100)]
         private void AddRendererTwoStateEvent() => AddNested<Events.MeshRendererTwoStateEvent>();
 
 #endif

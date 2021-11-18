@@ -18,7 +18,6 @@ namespace Alteracia.Patterns.ScriptableObjects
         // Called after runtime starts
         public void OnEnable()
         {
-            Debug.Log("OnEnable " + this.name);
             BindEventsRegistryAndBuss();
         }
         
@@ -30,7 +29,7 @@ namespace Alteracia.Patterns.ScriptableObjects
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
                     if (!cur.Equals(soEvent)) continue;
-                    //Debug.Log("Subscribe");
+                    
                     cur.SubscribeTo(soEvent);
                     soEvent.SubscribeTo(cur);
                     break;
@@ -46,24 +45,22 @@ namespace Alteracia.Patterns.ScriptableObjects
             {
                 if (_instance == null)
                 {
-                    Debug.LogWarning("There is no Scriptable Events Registry Buss asset in project");
+                    Debug.LogWarning("Scriptable Events Registry Buss asset not initialized or doesn't exists in project");
                 }
 
                 return _instance;
             }
         }
         
-        // Called after play pressed in editor
+        // Called before quit, recompilation and after press play button in editor
         public void OnDisable()
         {
-            Debug.Log("OnDisable " + this.name);
             SaveThis();
         }
 
         // Awake called after application starts - for editor start editor!
         void Awake()
         {
-            Debug.Log("Awake " + this.name);
             if (_instance == null) _instance = this;
             foreach (var registry in Registries.Where(registry => registry))
             {
@@ -91,7 +88,6 @@ namespace Alteracia.Patterns.ScriptableObjects
 
                 if (equal) continue;
                 AddNested((NestedScriptableObject)soEvent);
-                //Debug.Log("Added");
             }
         }
         

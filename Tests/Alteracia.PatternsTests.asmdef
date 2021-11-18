@@ -1,9 +1,9 @@
 {
-    "name": "PatternsTests",
+    "name": "Alteracia.PatternsTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "AltPatterns"
+        "Alteracia.Patterns"
     ],
     "includePlatforms": [
         "Editor"

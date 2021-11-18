@@ -10,26 +10,9 @@ namespace Alteracia.Patterns.ScriptableObjects
 
         void Awake()
         {
-            Debug.Log("Awake " + this.name);
             OnUpdateNestedList();
         }
-
-        private void OnEnable()
-        {
-            Debug.Log("Awake " + this.name);
-        }
-
-        private void OnValidate()
-        {
-            Debug.Log("On Validation " + this.name);
-        }
         
-        // Called after play pressed in editor
-        public void OnDisable()
-        {
-            Debug.Log("OnDisable " + this.name);
-        }
-
         public override void OnUpdateNestedList()
         {
             if (!ScriptableEventsRegistryBuss.Registries.Contains(this))

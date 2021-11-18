@@ -1,9 +1,11 @@
 {
-    "name": "AltPatterns",
+    "name": "Alteracia.Patterns.Editor",
     "references": [
-        "GUID:ddbcd5924212c4f19b2f2548b3e01b2e"
+        "Alteracia.Patterns"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

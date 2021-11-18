@@ -26,6 +26,10 @@ namespace Alteracia.Patterns.ScriptableObjects
       [SerializeField]
       protected T1 configuration;
       public T1 Configuration => configuration;
+
+      [Header("Config Ready Events")] 
+      [SerializeField]
+      private ObjectEvent<T1> scriptableEvent;
       [Space]
       [SerializeField]
       public ConfigEvent configurationReady = new ConfigEvent();
@@ -66,6 +70,7 @@ namespace Alteracia.Patterns.ScriptableObjects
          this.OnConfigurationRead();
          
          configurationReady?.Invoke(configuration);
+         if (scriptableEvent) scriptableEvent.OnEvent?.Invoke(configuration);
       }
 
       protected abstract void OnConfigurationRead();

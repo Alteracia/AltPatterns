@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using Alteracia.Patterns.ScriptableObjects.Events;
 using NUnit.Framework;
 using UnityEngine;

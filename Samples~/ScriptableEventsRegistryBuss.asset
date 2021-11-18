@@ -123,8 +123,6 @@ MonoBehaviour:
   toAdd: {fileID: 0}
   registries:
   - {fileID: 11400000, guid: 34bf2b36469be40368bd316eb7a28706, type: 2}
-  - {fileID: 11400000, guid: e11552cb6be75499b95eb7f41631e1d8, type: 2}
-  - {fileID: 11400000}
 --- !u!114 &1505379230678151317
 MonoBehaviour:
   m_ObjectHideFlags: 0

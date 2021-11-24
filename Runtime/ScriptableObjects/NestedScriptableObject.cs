@@ -13,9 +13,10 @@ namespace Alteracia.Patterns.ScriptableObjects
     {
         [SerializeField] private string rename;
         [HideInInspector][SerializeField] private RootScriptableObject root;
+        
+        public void Initialise(RootScriptableObject newRoot) => root = newRoot;
 
 #if UNITY_EDITOR
-        public void Initialise(RootScriptableObject newRoot) => root = newRoot;
         
         [ContextMenu("Rename")]
         private void SaveThis()

@@ -24,17 +24,21 @@ namespace Alteracia.Patterns.ScriptableObjects
         // Subscribe all on Start
         private void BindEventsRegistryAndBuss()
         {
+            int count = 0;
             foreach (var soEvent in registries.SelectMany(registry => registry.Nested.OfType<ISubscribableEvent>()))
             {
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
                     if (!cur.Equals(soEvent)) continue;
                     
+                   // Debug.Log("Subscribe " + cur.AssetName);
+                   // count++;
                     cur.SubscribeTo(soEvent);
                     soEvent.SubscribeTo(cur);
                     break;
                 }
             }
+            // Debug.Log("Subscribed " + count);
         }
         
 #if UNITY_EDITOR

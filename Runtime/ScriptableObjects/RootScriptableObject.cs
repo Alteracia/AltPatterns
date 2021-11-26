@@ -24,7 +24,7 @@ namespace Alteracia.Patterns.ScriptableObjects
 
 #if UNITY_EDITOR
 
-        [ContextMenu("Add new")]
+        [ContextMenu("Add new", false, 100)]
         private void AddNew()
         {
             if (!toAdd)
@@ -70,7 +70,7 @@ namespace Alteracia.Patterns.ScriptableObjects
 
         public virtual void OnUpdateNestedList() { }
 
-        [ContextMenu("Delete all")]
+        [ContextMenu("Delete all", false, 99)]
         protected void DeleteAll()
         {
             for (int i = nested.Count; i-- > 0;)

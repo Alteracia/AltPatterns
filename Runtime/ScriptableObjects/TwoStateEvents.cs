@@ -40,6 +40,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         }
         
         private object _temporalLast;
+        public string AssetName => this.name;
+
         public object TemporalLast
         {
             get => _temporalLast;
@@ -70,7 +72,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         public bool Equals(ISubscribableEvent other)
         {
             if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if (ReferenceEquals(this, other)) return true; // not true!!
             TwoStateEvents<T> otherEvent = other as TwoStateEvents<T>;
             return otherEvent && 
                    String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);

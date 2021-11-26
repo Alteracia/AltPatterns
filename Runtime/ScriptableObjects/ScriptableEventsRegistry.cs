@@ -63,18 +63,18 @@ namespace Alteracia.Patterns.ScriptableObjects
         private void AddMaterialTwoStateEvent() => AddNested<Events.MaterialTwoStateEvent>();
         
         
-        [ContextMenu("Add Transform Object Event", true, 100)]
+        [ContextMenu("Add Transform Object Event")]
         private void AddTransformObjectEvent() => AddNested<Events.TransformObjectEvent>();
-        [ContextMenu("Add Transform Component Event", true, 100)]
+        [ContextMenu("Add Transform Component Event")]
         private void AddTransformComponentEvent() => AddNested<Events.TransformComponentEvent>();
-        [ContextMenu("Add Transform Two State Event", true, 100)]
+        [ContextMenu("Add Transform Two State Event")]
         private void AddTransformTwoStateEvent() => AddNested<Events.TransformTwoStateEvent>();
         
-        [ContextMenu("Add Renderer Object Event", true, 100)]
+        [ContextMenu("Add Renderer Object Event")]
         private void AddRendererObjectEvent() => AddNested<Events.MeshRendererObjectEvent>();
-        [ContextMenu("Add Renderer Component Event", true, 100)]
+        [ContextMenu("Add Renderer Component Event")]
         private void AddRendererComponentEvent() => AddNested<Events.MeshRendererComponentEvent>();
-        [ContextMenu("Add Renderer Two State Event", true, 100)]
+        [ContextMenu("Add Renderer Two State Event")]
         private void AddRendererTwoStateEvent() => AddNested<Events.MeshRendererTwoStateEvent>();
 
 #endif

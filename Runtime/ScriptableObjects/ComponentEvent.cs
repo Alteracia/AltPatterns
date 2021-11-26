@@ -19,6 +19,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         public T Last => _last;
         
         private object _temporalLast;
+        public string AssetName => this.name;
+
         public object TemporalLast
         {
             get => _temporalLast;

@@ -4,6 +4,7 @@ namespace Alteracia.Patterns.ScriptableObjects
 {
     public interface ISubscribableEvent
     {
+        string AssetName { get; }
         object TemporalLast { get; set; }
         bool Equals(ISubscribableEvent other);
         void SubscribeTo(ISubscribableEvent other);
@@ -23,6 +24,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         public T Last => _last;
 
         private object _temporalLast;
+        public string AssetName => this.name;
+
         public object TemporalLast
         {
             get => _temporalLast;
@@ -62,7 +65,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             ObjectEvent<T> otherEvent = other as ObjectEvent<T>;
-            return otherEvent && String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);
+            return otherEvent != null && String.Equals(this.name, otherEvent.name, StringComparison.CurrentCultureIgnoreCase);
         }
     }
 }

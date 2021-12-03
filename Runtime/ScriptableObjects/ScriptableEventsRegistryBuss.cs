@@ -24,21 +24,17 @@ namespace Alteracia.Patterns.ScriptableObjects
         // Subscribe all on Start
         private void BindEventsRegistryAndBuss()
         {
-            int count = 0;
             foreach (var soEvent in registries.SelectMany(registry => registry.Nested.OfType<ISubscribableEvent>()))
             {
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
                     if (!cur.Equals(soEvent)) continue;
                     
-                   // Debug.Log("Subscribe " + cur.AssetName);
-                   // count++;
                     cur.SubscribeTo(soEvent);
                     soEvent.SubscribeTo(cur);
                     break;
                 }
             }
-            // Debug.Log("Subscribed " + count);
         }
         
 #if UNITY_EDITOR
@@ -104,20 +100,30 @@ namespace Alteracia.Patterns.ScriptableObjects
             EditorUtility.SetDirty(this);
         }
 
-        [ContextMenu("Clear Events")]
+        [ContextMenu("Clear")]
         private void ClearEvents()
         {
-            // TODO Check for duplications
-            
             if (registries != null) registries.RemoveAll(r => r == null);
-
+            
             var list = this.Nested.OfType<ISubscribableEvent>().ToList();
+            
+            var duplicates = list.GroupBy(x => x)
+                .Where(g => g.Count() > 1)
+                .Select(y => y.Key)
+                .ToList();
+            
+            // TODO Clear duplicates
+            foreach (var dup in duplicates)
+            {
+                
+            }
+            
             for (int i = list.Count; i-- > 0;)
             {
                 var tmp = list[i];
                 bool found = registries.SelectMany(registry => 
                     registry.Nested.OfType<ISubscribableEvent>()).Any(soEvent => tmp.Equals(soEvent));
-
+                
                 if (found) continue;
                 this.Nested.Remove((NestedScriptableObject) tmp);
                 Undo.DestroyObjectImmediate((NestedScriptableObject) tmp);

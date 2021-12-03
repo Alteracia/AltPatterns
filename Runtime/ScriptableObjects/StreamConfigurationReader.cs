@@ -14,6 +14,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             if (!File.Exists(path)) return;
             string json = File.ReadAllText(path);
             JsonUtility.FromJsonOverwrite(json, configurable);
+            await Task.Yield();
         }
     }
 }

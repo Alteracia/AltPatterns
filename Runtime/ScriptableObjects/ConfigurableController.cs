@@ -17,7 +17,7 @@ namespace Alteracia.Patterns.ScriptableObjects
    [Serializable]
    public class ConfigEvent : UnityEvent<ScriptableObject> {}
    
-   public abstract class ConfigurableController<T0, T1> : Controller<T0> where T0 : Controller<T0> where T1 : ScriptableObject
+   public abstract class ConfigurableController<T1> : MonoBehaviour where T1 : ScriptableObject
    {
       [SerializeField] 
       private bool initOnStart;

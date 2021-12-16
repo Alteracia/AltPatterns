@@ -8,6 +8,16 @@ namespace Alteracia.Patterns.ScriptableObjects
        
 #if UNITY_EDITOR
 
+        protected override T AddNested<T>()
+        {
+            var nested = base.AddNested<T>();
+            
+            //var subscr = (ISubscribableEvent)nested;
+            // TODO add meta
+            
+            return nested;
+        }
+
         void Awake()
         {
             OnUpdateNestedList();

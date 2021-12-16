@@ -40,11 +40,12 @@ namespace Alteracia.Patterns.ScriptableObjects
             toAdd = null;
         }
         
-        protected void AddNested<T>() where T : NestedScriptableObject
+        protected virtual T AddNested<T>() where T : NestedScriptableObject
         {
-            var newNested = ScriptableObject.CreateInstance<T>();
+            var newNested = CreateInstance<T>();
             newNested.name = typeof(T).Name;
             AddNewNested(newNested);
+            return newNested;
         }
         
         public void AddNested<T>(T toCopy) where T : NestedScriptableObject

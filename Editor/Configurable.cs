@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Alteracia.Patterns.Editor
 {
     [CanEditMultipleObjects]
-    public abstract class Configurable<T0, T1> : UnityEditor.Editor where T0 : ScriptableObjects.ConfigurableController<T0, T1>
+    public abstract class Configurable<T0, T1> : UnityEditor.Editor where T0 : ScriptableObjects.ConfigurableController<T1>
         where T1 : ScriptableObject
     {
         protected T0 instance;

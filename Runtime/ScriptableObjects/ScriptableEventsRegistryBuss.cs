@@ -11,9 +11,7 @@ namespace Alteracia.Patterns.ScriptableObjects
     [CreateAssetMenu(fileName = "ScriptableEventsRegistryBuss", menuName = "AltEvents/ScriptableEventsRegistryBuss", order = 0)]
     public class ScriptableEventsRegistryBuss : RootScriptableObject
     {
-        public static readonly List<ScriptableEventsRegistry> Registries = new List<ScriptableEventsRegistry>();
         [SerializeField] private List<ScriptableEventsRegistry> registries = new List<ScriptableEventsRegistry>();
-        private static ScriptableEventsRegistryBuss _instance;
         
         // Called after runtime starts
         public void OnEnable()
@@ -39,6 +37,9 @@ namespace Alteracia.Patterns.ScriptableObjects
         
 #if UNITY_EDITOR
 
+        public static readonly List<ScriptableEventsRegistry> Registries = new List<ScriptableEventsRegistry>();
+        private static ScriptableEventsRegistryBuss _instance;
+        
         public static ScriptableEventsRegistryBuss Instance
         {
             get
@@ -105,6 +106,9 @@ namespace Alteracia.Patterns.ScriptableObjects
         [ContextMenu("Clear")]
         private void ClearEvents()
         {
+            this.ClearNested();
+            this.ClearNested(n => !(n is ISubscribableEvent));
+            
             if (registries != null) registries.RemoveAll(r => r == null);
             
             var list = this.Nested.OfType<ISubscribableEvent>().ToList();

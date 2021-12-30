@@ -18,12 +18,22 @@ namespace Alteracia.Patterns.ScriptableObjects
             return nested;
         }
 
+        /*
         void Awake()
         {
             OnUpdateNestedList();
         }
+        */
         
-        public override void OnUpdateNestedList()
+        [ContextMenu("Clear")]
+        private void ClearEvents()
+        {
+            this.ClearNested();
+            this.ClearNested(n => !(n is ISubscribableEvent));
+        }
+
+        [ContextMenu("Add Registry to Buss")]
+        public override void OnUpdateNestedList() // Called after any changes
         {
             if (!ScriptableEventsRegistryBuss.Registries.Contains(this))
                 ScriptableEventsRegistryBuss.Registries.Add(this);

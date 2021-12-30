@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
+using System;
 using UnityEditor;
 #endif
 
@@ -13,7 +14,7 @@ namespace Alteracia.Patterns.ScriptableObjects
 {
     public abstract class RootScriptableObject : ScriptableObject
     {
-        [HideInInspector][SerializeField] private List<NestedScriptableObject> nested = new List<NestedScriptableObject>();
+        [SerializeField] private List<NestedScriptableObject> nested = new List<NestedScriptableObject>();
         [SerializeField] private NestedScriptableObject toAdd;
 
         public List<NestedScriptableObject> Nested
@@ -50,7 +51,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         
         public void AddNested<T>(T toCopy) where T : NestedScriptableObject
         {
-            var newNested = ScriptableObject.Instantiate(toCopy);
+            var newNested = Instantiate(toCopy);
             newNested.name = toCopy.name;
             AddNewNested(newNested);
         }
@@ -60,6 +61,9 @@ namespace Alteracia.Patterns.ScriptableObjects
             newNested.Initialise(this);
             nested.Add(newNested);
 
+            //AssetDatabase.IsSubAsset()
+            //AssetDatabase.RemoveObjectFromAsset();
+            //AssetDatabase.importPackageCompleted
             AssetDatabase.AddObjectToAsset(newNested, this);
             AssetDatabase.SaveAssets();
 
@@ -83,6 +87,30 @@ namespace Alteracia.Patterns.ScriptableObjects
             }
 
             AssetDatabase.SaveAssets();
+            OnUpdateNestedList();
+        }
+        
+        [ContextMenu("Clear nested", false, 100)]
+        protected void ClearNested()
+        {
+            for (int i = nested.Count; i-- > 0;)
+            {
+                if (nested[i] == null) nested.RemoveAt(i);
+            }
+
+            AssetDatabase.SaveAssets();
+            OnUpdateNestedList();
+        }
+        
+        protected void ClearNested(Predicate<NestedScriptableObject> match)
+        {
+            for (int i = nested.Count; i-- > 0;)
+            {
+                if (match.Invoke(nested[i])) nested.RemoveAt(i);
+            }
+
+            AssetDatabase.SaveAssets();
+            OnUpdateNestedList();
         }
 
 #endif

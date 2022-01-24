@@ -19,20 +19,20 @@ namespace Alteracia.Patterns.ScriptableObjects
         [NonSerialized] private bool? _state = null;
         public bool? IsSecondary => _state;
 
-        [NonSerialized] private T _lastPrimary;
+        [NonSerialized] protected T _lastPrimary;
         public T LastPrimary => _lastPrimary;
         
-        [NonSerialized] private T _lastSecondary;
+        [NonSerialized] protected T _lastSecondary;
         public T LastSecondary => _lastSecondary;
 
-        [NonSerialized] private Action<T> _onPrimaryEvent;
+        [NonSerialized] protected Action<T> _onPrimaryEvent;
         public Action<T> OnPrimaryEvent
         {
             get => _onPrimaryEvent;
             set => _onPrimaryEvent = value;
         }
         
-        [NonSerialized] private Action<T> _onSecondaryEvent;
+        [NonSerialized] protected Action<T> _onSecondaryEvent;
         public Action<T> OnSecondaryEvent
         {
             get => _onSecondaryEvent;

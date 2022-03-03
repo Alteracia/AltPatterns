@@ -9,6 +9,8 @@ namespace Alteracia.Patterns.ScriptableObjects
         T LastSecondary { get; }
         Action<T> OnPrimaryEvent { get; set; }
         Action<T> OnSecondaryEvent { get; set; }
+        void InvokePrimary(T obj);
+        void InvokeSecondary(T obj);
     }
 
     /// <summary>
@@ -38,7 +40,17 @@ namespace Alteracia.Patterns.ScriptableObjects
             get => _onSecondaryEvent;
             set => _onSecondaryEvent = value;
         }
-        
+
+        public void InvokePrimary(T obj)
+        {
+            OnPrimaryEvent?.Invoke(obj);
+        }
+
+        public void InvokeSecondary(T obj)
+        {
+            OnSecondaryEvent?.Invoke(obj);
+        }
+
         private object _temporalLast;
         public string AssetName => this.name;
 

@@ -14,6 +14,7 @@ namespace Alteracia.Patterns.ScriptableObjects
     {
         T Last { get; }
         Action<T> OnEvent { get; set; }
+        void Invoke(T obj);
     }
 
     public abstract class ObjectEvent<T> : NestedScriptableObject, IObjectEvent<T>, ISubscribableEvent
@@ -53,6 +54,11 @@ namespace Alteracia.Patterns.ScriptableObjects
         {
             get => _onEvent;
             set => _onEvent = value;
+        }
+
+        public void Invoke(T obj)
+        {
+            OnEvent?.Invoke(obj);
         }
 
         protected ObjectEvent()

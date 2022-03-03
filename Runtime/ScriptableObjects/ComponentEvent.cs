@@ -9,6 +9,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         Action<T> OnEvent { get; set; }
         void GetComponent(GameObject go);
         void AddComponent(GameObject go);
+        void Invoke(T obj);
     }
 
     public abstract class ComponentEvent<T> : NestedScriptableObject, ISubscribableEvent, IComponentEvents<T> where T : Component
@@ -48,6 +49,11 @@ namespace Alteracia.Patterns.ScriptableObjects
         {
             var comp = go.AddComponent<T>();
             _onEvent?.Invoke(comp);
+        }
+
+        public void Invoke(T obj)
+        {
+            _onEvent?.Invoke(obj);
         }
 
         public bool Equals(ISubscribableEvent other)

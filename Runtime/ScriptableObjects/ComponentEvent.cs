@@ -80,5 +80,11 @@ namespace Alteracia.Patterns.ScriptableObjects
                 otherObjectEvent.OnEvent?.Invoke(passed);
             };
         }
+
+        public void CopyFrom(ISubscribableEvent other)
+        {
+            ComponentEvent<T> otherObjectEvent = (ComponentEvent<T>)other;
+            this._last = otherObjectEvent.Last;
+        }
     }
 }

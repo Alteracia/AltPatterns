@@ -16,6 +16,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         // Called after runtime starts
         public void OnEnable()
         {
+            _instance = this;
             BindEventsRegistryAndBuss();
         }
         
@@ -27,7 +28,7 @@ namespace Alteracia.Patterns.ScriptableObjects
                 foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
                 {
                     if (!cur.Equals(soEvent)) continue;
-                    
+
                     cur.SubscribeTo(soEvent);
                     soEvent.SubscribeTo(cur);
                     break;
@@ -35,7 +36,21 @@ namespace Alteracia.Patterns.ScriptableObjects
             }
         }
         
-#if UNITY_EDITOR
+        public void UpdateEvents(ScriptableEventsRegistry registry)
+        {
+            foreach (var soEvent in registry.Nested.OfType<ISubscribableEvent>())
+            {
+                foreach (var cur in this.Nested.OfType<ISubscribableEvent>())
+                {
+                    if (!cur.Equals(soEvent)) continue;
+                    soEvent.CopyFrom(cur);
+                    
+                    cur.SubscribeTo(soEvent);
+                    soEvent.SubscribeTo(cur);
+                    break;
+                }
+            }
+        }
 
         public static readonly List<ScriptableEventsRegistry> Registries = new List<ScriptableEventsRegistry>();
         private static ScriptableEventsRegistryBuss _instance;
@@ -53,22 +68,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             }
         }
         
-        // Called before quit, recompilation and after press play button in editor
-        public void OnDisable()
-        {
-            SaveThis();
-        }
-
-        // Awake called after application starts - for editor start editor!
-        void Awake()
-        {
-            if (_instance == null) _instance = this;
-            foreach (var registry in Registries.Where(registry => registry))
-            {
-                this.AddRegistry(registry);
-            }
-        }
-        
+#if UNITY_EDITOR
         public void AddRegistry(ScriptableEventsRegistry registry)
         {
             if (!registries.Contains(registry))
@@ -93,7 +93,23 @@ namespace Alteracia.Patterns.ScriptableObjects
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(this);
         }
-        
+
+        // Called before quit, recompilation and after press play button in editor
+        public void OnDisable()
+        {
+            SaveThis();
+        }
+
+        // Awake called after application starts - for editor start editor!
+        void Awake()
+        {
+            if (_instance == null) _instance = this;
+            foreach (var registry in Registries.Where(registry => registry))
+            {
+                this.AddRegistry(registry);
+            }
+        }
+
         [ContextMenu("Save")]
         private void SaveThis()
         {
@@ -102,7 +118,7 @@ namespace Alteracia.Patterns.ScriptableObjects
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(this);
         }
-
+        
         [ContextMenu("Clear")]
         private void ClearEvents()
         {
@@ -135,7 +151,6 @@ namespace Alteracia.Patterns.ScriptableObjects
             AssetDatabase.SaveAssets();
             EditorUtility.SetDirty(this);
         }
-        
 #endif
     }
 

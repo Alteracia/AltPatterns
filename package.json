@@ -1,6 +1,6 @@
 {
   "name": "com.alteracia.altpatterns",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "displayName": "Alteracia.Patterns",
   "description": "Some Patterns for Unity",
   "unity": "2017.1",
@@ -13,7 +13,7 @@
     "url": "alteracia.ru"
   },
   "dependencies": {
-    "com.alteracia.altweb": "0.0.3"
+    "com.alteracia.altweb": "0.1.1"
   },
   "samples": [
     {

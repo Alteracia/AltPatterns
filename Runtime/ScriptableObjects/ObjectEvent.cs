@@ -8,6 +8,7 @@ namespace Alteracia.Patterns.ScriptableObjects
         object TemporalLast { get; set; }
         bool Equals(ISubscribableEvent other);
         void SubscribeTo(ISubscribableEvent other);
+        void CopyFrom(ISubscribableEvent other);
     }
     
     public interface IObjectEvent<T>
@@ -48,6 +49,12 @@ namespace Alteracia.Patterns.ScriptableObjects
                 ObjectEvent<T> otherObjectEvent = (ObjectEvent<T>)other;
                 otherObjectEvent.OnEvent?.Invoke(passed);
             };
+        }
+
+        public void CopyFrom(ISubscribableEvent other)
+        {
+            ObjectEvent<T> otherObjectEvent = (ObjectEvent<T>)other;
+            this._last = otherObjectEvent.Last;
         }
 
         public Action<T> OnEvent

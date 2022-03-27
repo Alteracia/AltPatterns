@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Alteracia.Patterns
 {
+    [Obsolete("Singleton, we don't like it now", true)]
     public abstract class QueueManager<T, T0> : Manager<T> where T : Manager<T>
     {
         [SerializeField] 

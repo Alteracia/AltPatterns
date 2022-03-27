@@ -1,8 +1,8 @@
 {
   "name": "com.alteracia.altpatterns",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "displayName": "Alteracia.Patterns",
-  "description": "Some Patterns for Unity",
+  "description": "Some basic Patterns for Unity. \nEvents based on Scriptable Objects.\nTask extensions.",
   "unity": "2017.1",
   "keywords": [
     "patterns"

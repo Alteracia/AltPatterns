@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Alteracia.Patterns
 {
+    [Obsolete("Singleton, we don't like it now", true)]
     public abstract class Controller<T> : MonoBehaviour where T : Controller<T>
     {
         private static T _instance;

@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Alteracia.Patterns
 {
+    [Obsolete("Singleton, we don't like it now", true)]
     public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
     {
         private static T _instance;

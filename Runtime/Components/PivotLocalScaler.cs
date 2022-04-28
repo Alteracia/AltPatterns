@@ -74,7 +74,7 @@ namespace Alteracia.Patterns.Components
 
         private void Scale(Transform obj)
         {
-            Debug.Log("scale " + obj.name);
+            //Debug.Log("scale " + obj.name);
             if (!obj.GetComponentInChildren<Renderer>(true)) return;
 
             Vector3? checkBounds = GetBounds(obj);
@@ -82,10 +82,10 @@ namespace Alteracia.Patterns.Components
             var bounds = (Vector3) checkBounds;
 
             float scale = maxTarget / Mathf.Max(bounds.x, bounds.y, bounds.z);
-            Debug.Log("calculated scale = " + scale);
+            //Debug.Log("calculated scale = " + scale);
             if (Mathf.Abs(localScaleEvent.Last - scale) < float.Epsilon) return;
 
-            Debug.Log("Send scale = " + scale);
+            //Debug.Log("Send scale = " + scale);
             localScaleEvent.OnEvent?.Invoke(scale);
         }
 

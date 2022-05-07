@@ -34,7 +34,9 @@ namespace Alteracia.Patterns.ScriptableObjects
       [SerializeField]
       public ConfigEvent configurationReady = new ConfigEvent();
 
-      private void Start()
+      [NonSerialized] protected Task Reading;
+
+      protected virtual void Start()
       {
          if (initOnStart) ReadConfiguration();
       }
@@ -59,13 +61,15 @@ namespace Alteracia.Patterns.ScriptableObjects
 
       public async void ReadConfiguration()
       {
+         if (!configuration) return;
+         
          if (reader)
          {
             // Try load config
-            await reader.ReadConfigFile(configuration);
+            Reading ??= reader.ReadConfigFile(configuration);
+            await Reading;
+            Reading = null;
          }
-         
-         if (!configuration) return;
          
          this.OnConfigurationRead();
          
@@ -121,7 +125,7 @@ namespace Alteracia.Patterns.ScriptableObjects
          var path = UnityEditor.EditorUtility.SaveFilePanel(
             "Save configuration as json",
             "",
-            typeof(T1) + ".json",
+            configuration.name + ".json",
             "json");
 
          if (string.IsNullOrEmpty(path)) return;

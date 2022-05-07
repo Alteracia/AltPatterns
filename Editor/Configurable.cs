@@ -21,6 +21,7 @@ namespace Alteracia.Patterns.Editor
         {
             OnInspectorCustomGUI();
 
+            GUILayout.Space(20f);
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Create config"))
                 instance.CreateConfiguration();
